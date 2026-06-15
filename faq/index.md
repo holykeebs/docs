@@ -42,9 +42,19 @@ number can be used in your local postal tracking for more detailed tracking (ava
 
 ### Taxes, duties, and customs fees
 
-For US customers, import tax is charged at checkout, and our shipping partner handles payment to the relevant authorities.
+#### US {#taxes-us}
 
-For all other countries, import duties, taxes, VAT/GST, brokerage fees, or other customs-related charges may apply. These fees are set by the destination country and are not included in our product or shipping prices unless clearly shown at checkout.
+Import tax is charged at checkout, and our shipping partner handles payment to the relevant authorities.
+
+#### Rest of the world {#taxes-rest-of-world}
+
+::: warning HEADS UP
+The EU is ending the duty-free exemption for low-value parcels (goods worth €150 or less). From 1 July 2026, these orders incur a flat €3 customs duty on import. Our carrier bills this to us, so we add it as a €3 charge to EU orders of €150 or less. Orders above €150 are unaffected; they're charged standard value-based duties, as they are today.
+
+For details, see the [Council of the EU announcement](https://www.consilium.europa.eu/en/press/press-releases/2026/02/11/council-gives-final-green-light-to-new-customs-duty-rules-for-small-parcels/).
+:::
+
+Import duties, taxes, VAT/GST, brokerage fees, or other customs-related charges may apply. These fees are set by the destination country and are not included in our product or shipping prices unless clearly shown at checkout.
 
 Paying any customs fees charged after shipment is the customer's responsibility. Your local carrier or customs office may contact you directly for payment before delivery - it is your responsibility to track the shipment and respond promptly to any requests, otherwise the package may be returned to us or destroyed by customs.
 

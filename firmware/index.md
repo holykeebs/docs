@@ -33,14 +33,21 @@ Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. Th
 
 The source code for all keyboards can be found on the `hk-master` branch of https://github.com/holykeebs/qmk_firmware. This repo is periodically kept up to date with main QMK.
 
-Most of the custom logic is contained to `users/holykeebs` and the specific keyboard you're flashing for. Some scaffolding changes were also required in core QMK, but these are quite limited.
+The custom logic lives in two places:
 
-If you wish to bring the changes into your own fork of QMK, please make sure you've copied them all. The diff can be obtained as follows:
+- The shared, cross-keyboard logic is in `users/holykeebs`, which is kept in a separate [QMK External Userspace](https://docs.qmk.fm/newbs_external_userspace) overlay repository (https://github.com/holykeebs/qmk-userspace), shared across our QMK and Vial forks.
+- The per-keyboard code lives under the specific keyboard you're flashing for, in the qmk_firmware repo above.
+
+Some scaffolding changes were also required in core QMK, but these are quite limited.
+
+If you wish to bring the changes into your own fork of QMK, please make sure you've copied them all from **both** repositories. The diff for the core / keyboard changes can be obtained as follows:
 
 ```shell
 $ git remote add holykeebs git@github.com:holykeebs/qmk_firmware.git
 $ git diff holykeebs/master...holykeebs/hk-master
 ```
+
+The userspace changes are simply the entire contents of the [overlay repository](https://github.com/holykeebs/qmk-userspace).
 
 ## Precompiled
 
@@ -62,7 +69,7 @@ Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. Th
 
 ## Compiling
 
-Since many of our keyboards share common features such as OLED / Pointing Devices, these are supported via the [Userspace feature](https://docs.qmk.fm/#/feature_userspace): this allows the logic to be separated from a specific keyboard / keymap. See the files in [`users/holykeebs`](https://github.com/holykeebs/qmk_firmware/tree/hk-master/users/holykeebs).
+Since many of our keyboards share common features such as OLED / Pointing Devices, these are supported via QMK's [Userspace feature](https://docs.qmk.fm/#/feature_userspace): this allows the logic to be separated from a specific keyboard / keymap. The shared userspace is maintained as a standalone [External Userspace](https://docs.qmk.fm/newbs_external_userspace) overlay. See the `users/holykeebs` directory in [holykeebs/qmk-userspace](https://github.com/holykeebs/qmk-userspace).
 
 Start by setting up a development environment per [QMK instructions](https://docs.qmk.fm/#/newbs). Clone the repo above and not the main QMK repo:
 
@@ -71,6 +78,15 @@ Start by setting up a development environment per [QMK instructions](https://doc
 $ git clone --recurse-submodules git@github.com:holykeebs/qmk_firmware.git -b hk-master
 $ cd qmk_firmware
 ```
+
+The shared userspace lives in the overlay repository, so clone it as well and point QMK at it. This is a one-time setting, and it's global to the `qmk` CLI, so it applies to every fork you build:
+
+```shell
+$ git clone git@github.com:holykeebs/qmk-userspace.git
+$ qmk config user.overlay_dir="$(realpath qmk-userspace)"
+```
+
+Builds then pick up `users/holykeebs` from the overlay automatically. If it isn't configured, the build fails with `fatal error: users/holykeebs/holykeebs.h: No such file or directory`.
 
 ### Building
 
@@ -322,7 +338,7 @@ The following keycodes allow control of the above features. Orders that use the 
 Without an OLED, it's impossible to know what the values above are set to. If you'd like to tune them or just see what's going
 on behind the scenes, you can turn on debug mode.
 
-When compiling your own firmware, simply set `CONSOLE_ENABLED=yes` in `users/holykeebs/rules.mk` or in any other `rules.mk` in your
+When compiling your own firmware, simply set `CONSOLE_ENABLED=yes` in `users/holykeebs/rules.mk` (in the overlay repository) or in any other `rules.mk` in your
 keyboard tree.
 
 When using the precompiled firmwares, debug mode is turned on if the file begins with `debug_`.

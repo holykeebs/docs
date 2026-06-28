@@ -379,6 +379,7 @@ The following keycodes allow control of the above features. Orders that use the 
 | `HK_AML_T`     | `Kb 12`        | `0x7e0c` | Toggles the auto-mouse layer                                                |
 | `HK_AML_UP`    | `Kb 13`        | `0x7e0d` | Increases the auto-mouse layer timeout by 50ms                              |
 | `HK_AML_DN`    | `Kb 14`        | `0x7e0e` | Decreases the auto-mouse layer timeout by 50ms                              |
+| `HK_BONGO_T`   | `Kb 15`        | `0x7e0f` | Toggles the bongocat OLED animation (hold shift to target the peripheral OLED) |
 
 \* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device.
 

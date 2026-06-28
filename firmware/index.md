@@ -12,7 +12,7 @@ import NameGenerator from './NameGenerator.vue'
 
 - sensitivity: adjusts how far the cursor moves for a given motion of the pointing device. Useful for large screens or cases where fine grained movement is necessary. Supports two modes, default and "sniping", each with its own sensitivity. How it's applied is device dependent: a software movement factor, or the hardware CPI on sensors that support it.
 - drag scroll mode: convert mouse moves into scrolling (similar to middle mouse click).
-- buffered scroll: slows down scrolling for more control.
+- scroll throttle: slows down scrolling for more control.
 - scroll lock: constraints scrolling to vertical / horizontal only.
 
 All of the above can be adjusted on the fly without flashing a new firmware. See [below](#features) for a more in-depth walkthrough.
@@ -336,9 +336,9 @@ Sniping is simply another sensitivity profile that can be applied to a pointing 
 
 Drag scroll lets you move a pointing device and have those moves translate to scrolls, figuratively dragging the mouse to scroll.
 
-### Buffered Scroll
+### Scroll Throttle
 
-Moving the mouse to scroll often results in an unusable scroll amount. This buffers a specified amount of move before sending a scroll to the host, effectively slowing it down.
+Moving the mouse to scroll often results in an unusable scroll amount. The scroll throttle requires a specified amount of movement before sending a scroll to the host, effectively slowing it down.
 
 ### Scroll Lock
 
@@ -355,7 +355,7 @@ On a keyboard with a pointing device and screen, the screen will display the fol
 |  0  | Displays information on the last pressed key, and any held ones                                 |
 |  1  | Displays the current pointing device (or NONE) and the last x/y/v/h movements                   |
 |  2  | On the left, displays the current pointing profile (D for default, S for sniping)               |
-|  2  | On the right, displays the sensitivity, scroll buffer, drag scroll mode, and scroll lock |
+|  2  | On the right, displays the sensitivity, scroll throttle, drag scroll mode, and scroll lock |
 |  3  | Displays the active layers and whether automatic mouse layer is on                              |
 
 ### Usage
@@ -431,7 +431,7 @@ liliums:Lily58:1: }
 
 On a dual pointing device setup, it's often desirable to set one of the pointing devices to always scroll (this is done by default if the secondary one is a Pimoroni Trackball).
 
-To do this, hold shift and tap `HK_D_MODE_T`. This will toggle drag scroll on the peripheral pointing device. Test if the scroll speed is comfortable, and if not adjust it by setting the scroll buffer.
+To do this, hold shift and tap `HK_D_MODE_T`. This will toggle drag scroll on the peripheral pointing device. Test if the scroll speed is comfortable, and if not adjust it by setting the scroll throttle.
 
 Finish by pressing `HK_SAVE` to persist the changes.
 

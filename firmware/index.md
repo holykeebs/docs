@@ -360,20 +360,23 @@ On a keyboard with a pointing device and screen, the screen will display the fol
 
 The following keycodes allow control of the above features. Orders that use the build service and have a pointing device come flashed with a default firmware that already puts these keys at sane locations. See [keymaps](../keymaps/index.md) for more details.
 
-| Keycode        | Value on Remap  | VIA code | Description                                                                 |
-|:---------------|:----------------|:---------|:----------------------------------------------------------------------------|
-| `HK_RESET`     | `Kb 0`          | `0x7e00` | Resets the configuration to its default state                               |
-| `HK_SAVE`      | `Kb 1`          | `0x7e01` | Saves the current config, making it persist across keyboard restart         |
-| `HK_DUMP`      | `Kb 2`          | `0x7e02` | Dumps the current config to the console (needs `CONSOLE_ENABLE=yes`)        |
-| `HK_P_SET_D`   | `Kb 3`          | `0x7e03` | When held*, tapping up/down increases/decreases the default profile's scale |
-| `HK_P_SET_S`   | `Kb 4`          | `0x7e04` | When held*, tapping up/down increases/decreases the sniping profile's scale |
-| `HK_P_SET_BUF` | `Kb 5`          | `0x7e05` | When held*, pressing up/down increases/decreases the scroll buffer          |
-| `HK_S_MODE`    | `Kb 6`          | `0x7e06` | When held*, enables sniping                                                 |
-| `HK_S_MODE_T`  | `Kb 7`          | `0x7e07` | Toggles sniping                                                             |
-| `HK_D_MODE`    | `Kb 8`          | `0x7e08` | When held*, enables the drag scroll                                         |
-| `HK_D_MODE_T`  | `Kb 9`          | `0x7e09` | Toggles drag scroll                                                         |
-| `HK_C_SCROLL`  | `Kb 10`         | `0x7e0a` | Cycles the scroll lock between off, horizontal and vertical                 |
-| `HK_I_SCROLL`  | `Kb 11`         | `0x7e0b` | Inverts the scroll direction                                                |
+| Keycode        | Value on Remap | VIA code | Description                                                                 |
+|:---------------|:---------------|:---------|:----------------------------------------------------------------------------|
+| `HK_SAVE`      | `Kb 0`         | `0x7e00` | Saves the current config, making it persist across keyboard restart         |
+| `HK_RESET`     | `Kb 1`         | `0x7e01` | Resets the configuration to its default state                               |
+| `HK_DUMP`      | `Kb 2`         | `0x7e02` | Dumps the current config to the console (needs `CONSOLE_ENABLE=yes`)        |
+| `HK_P_SET_D`   | `Kb 3`         | `0x7e03` | When held*, tapping up/down increases/decreases the default profile's scale |
+| `HK_P_SET_S`   | `Kb 4`         | `0x7e04` | When held*, tapping up/down increases/decreases the sniping profile's scale |
+| `HK_P_SET_THR` | `Kb 5`         | `0x7e05` | When held*, pressing up/down increases/decreases the scroll throttle        |
+| `HK_S_MODE`    | `Kb 6`         | `0x7e06` | When held*, enables sniping                                                 |
+| `HK_S_MODE_T`  | `Kb 7`         | `0x7e07` | Toggles sniping                                                             |
+| `HK_D_MODE`    | `Kb 8`         | `0x7e08` | When held*, enables the drag scroll                                         |
+| `HK_D_MODE_T`  | `Kb 9`         | `0x7e09` | Toggles drag scroll                                                         |
+| `HK_C_SCROLL`  | `Kb 10`        | `0x7e0a` | Cycles the scroll lock between off, horizontal and vertical                 |
+| `HK_I_SCROLL`  | `Kb 11`        | `0x7e0b` | Inverts the scroll direction                                                |
+| `HK_AML_T`     | `Kb 12`        | `0x7e0c` | Toggles the auto-mouse layer                                                |
+| `HK_AML_UP`    | `Kb 13`        | `0x7e0d` | Increases the auto-mouse layer timeout by 50ms                              |
+| `HK_AML_DN`    | `Kb 14`        | `0x7e0e` | Decreases the auto-mouse layer timeout by 50ms                              |
 
 \* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device.
 

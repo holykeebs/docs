@@ -107,9 +107,10 @@ The value for `<keyboard>` should match the keyboard you are flashing for:
 | Keyball39 | keyball/keyball39 |
 | Keyball44 | keyball/keyball44 |
 | Keyball61 | keyball/keyball61 |
+| Keyball61+ | holykeebs/keyball61plus |
 
 ::: info
-For Keyball, please see the [dedicated section](#keyball) as the options below don't apply.
+For Keyball 39/44/61, please see the [dedicated section](#keyball) as the options below don't apply. The Keyball61+ is a different, userspace-based board; see [Keyball61+](#keyball61) below.
 :::
 
 The table below lists the possible flags that control what feature to turn on in the firmware.
@@ -255,6 +256,16 @@ make keyball/keyball44:via:flash -j8
 
 USB cable can be connected to either side of the keyboard.
 
+### Keyball61+
+
+The Keyball61+ is a Keyball built on the holykeebs userspace, so the `HK_*` keycodes
+and [features](#features) on this page apply (not the Keyball custom keycodes). See the [Keyball61+ guide](/guides/keyboard/keyball/#keyball61) for the
+full details. Build it with:
+
+```shell
+make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+```
+
 ## Vial
 
 [Vial](https://get.vial.today/) is an alternative to VIA / Remap: a desktop app
@@ -267,8 +278,8 @@ It builds against the **same** `users/holykeebs` overlay as the QMK firmware (se
 identically; only the configurator differs.
 
 ::: info
-The keyball61plus is currently the keyboard supported on Vial. Our other keyboards
-use VIA / Remap ([above](#compiling)).
+The [Keyball61+](#keyball61) is currently the keyboard supported on Vial. Our other
+keyboards use VIA / Remap ([above](#compiling)).
 :::
 
 Build it from the vial-qmk fork. The one-time overlay setup is shared: `qmk`'s

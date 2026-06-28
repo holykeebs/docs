@@ -77,6 +77,29 @@ Keyball comes with custom keycodes that provide access to Keyball features witho
 
 If you wish to have your current configuration persist across reboots, use the `KBC_SAVE` keycode to save it to memory. Please note that each half of the Keyball has separate memory, so if you wish to have same behavior regardless of which half is plugged in, you will need to repeat the configuration for each half.
 
+## Keyball61+
+
+The Keyball61+ is a 61-key Keyball with a PMW3360 trackball.
+
+Its firmware is built on the holykeebs userspace, the same one our other
+pointing-device keyboards use, rather than the Keyball firmware described above.
+What that means in practice:
+
+- The custom keycodes are the `HK_*` keycodes documented on the [Firmware](../../../firmware/index.md#features) page, **not** the [Custom Keycodes](#custom-keycodes) listed above.
+- The trackball is set up automatically, so there's no pointing-device option to choose.
+- High-resolution scrolling is on by default.
+- It works with both VIA / Remap and [Vial](../../../firmware/index.md#vial).
+
+While on the `hk-master` branch, build it with (append `:flash` to also flash):
+
+```shell
+make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+```
+
+Use `:vial` in place of `:via` for the Vial firmware. See the
+[Firmware](../../../firmware/index.md) page for environment setup and the full
+feature reference.
+
 ## Building Your Own Firmware
 
 Please see the [Firmware guide](../../../firmware/index.md).

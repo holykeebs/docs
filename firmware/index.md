@@ -10,7 +10,7 @@ import NameGenerator from './NameGenerator.vue'
 
 [QMK](https://docs.qmk.fm/#/) is a popular free and open-source keyboard firmware. All of our keyboards are supported by QMK and VIA / Remap for dynamic key assignments and layering. The firmware provides features that streamline pointing device usage, which is a focus of the store. These include:
 
-- scaled movement: transforms the x/y that's read from the pointing device. This is useful for large screens or cases where fine grained move is necessary. Supports two modes: default and "sniping", each with its own multiplier.
+- sensitivity: adjusts how far the cursor moves for a given motion of the pointing device. Useful for large screens or cases where fine grained movement is necessary. Supports two modes, default and "sniping", each with its own sensitivity. How it's applied is device dependent: a software movement factor, or the hardware CPI on sensors that support it.
 - drag scroll mode: convert mouse moves into scrolling (similar to middle mouse click).
 - buffered scroll: slows down scrolling for more control.
 - scroll lock: constraints scrolling to vertical / horizontal only.
@@ -316,19 +316,21 @@ The Keyball and Killer Whale firmwares have their own dedicated implementation t
 
 The default firmware facilitates pointing device usage by extending QMK with some useful and common functionality. This functionality is exposed via a collection of keycodes that can be bound to your liking. The `hk` keymap provides a batteries included mapping in a dedicated `POINTER` layer to make use of these keycodes.
 
-### Scaling
+### Sensitivity
 
-Often the stock movement speed of the pointing device isn't a good fit for your setup. This allows scaling the output of the movement before its sent to the host.
+Often the stock movement speed of the pointing device isn't a good fit for your setup. Adjusting the sensitivity changes how far the cursor moves for a given motion of the pointing device.
 
-Scaling is supported on a default profile and a secondary, "sniping" profile.
+How the sensitivity is realized is device dependent: for most devices it's a software factor applied to the movement, while for sensors that support it (such as the PMW3360 trackball) it's the hardware CPI. The sensible default is chosen based on the device.
+
+Sensitivity is supported on a default profile and a secondary, "sniping" profile.
 
 ::: details
-The current implementation intentionally doesn't alter the related CPI/DPI setting as this doesn't work well with all pointing devices (e.g. on a touchpad where a lot of different settings are derived from the CPI and cease to function properly).
+For devices where the sensitivity is a software factor, the hardware CPI/DPI is intentionally left alone, as changing it doesn't work well with all pointing devices (e.g. on a touchpad where a lot of different settings are derived from the CPI and cease to function properly).
 :::
 
 ### Sniping
 
-Sniping is simply another scale profile that can be applied to a pointing device, either by holding a key or toggling the mode. It's called sniping because this mode usually uses a smaller scale than the default profile, thus allowing finer movement.
+Sniping is simply another sensitivity profile that can be applied to a pointing device, either by holding a key or toggling the mode. It's called sniping because this mode usually uses a lower sensitivity than the default profile, thus allowing finer movement.
 
 ### Drag Scroll
 
@@ -353,7 +355,7 @@ On a keyboard with a pointing device and screen, the screen will display the fol
 |  0  | Displays information on the last pressed key, and any held ones                                 |
 |  1  | Displays the current pointing device (or NONE) and the last x/y/v/h movements                   |
 |  2  | On the left, displays the current pointing profile (D for default, S for sniping)               |
-|  2  | On the right, displays the scaling multpilier, scroll buffer, drag scroll mode, and scroll lock |
+|  2  | On the right, displays the sensitivity, scroll buffer, drag scroll mode, and scroll lock |
 |  3  | Displays the active layers and whether automatic mouse layer is on                              |
 
 ### Usage
@@ -365,8 +367,8 @@ The following keycodes allow control of the above features. Orders that use the 
 | `HK_SAVE`      | `Kb 0`         | `0x7e00` | Saves the current config, making it persist across keyboard restart         |
 | `HK_RESET`     | `Kb 1`         | `0x7e01` | Resets the configuration to its default state                               |
 | `HK_DUMP`      | `Kb 2`         | `0x7e02` | Dumps the current config to the console (needs `CONSOLE_ENABLE=yes`)        |
-| `HK_P_SET_D`   | `Kb 3`         | `0x7e03` | When held*, tapping up/down increases/decreases the default profile's scale |
-| `HK_P_SET_S`   | `Kb 4`         | `0x7e04` | When held*, tapping up/down increases/decreases the sniping profile's scale |
+| `HK_P_SET_D`   | `Kb 3`         | `0x7e03` | When held*, tapping up/down increases/decreases the default sensitivity |
+| `HK_P_SET_S`   | `Kb 4`         | `0x7e04` | When held*, tapping up/down increases/decreases the sniping sensitivity |
 | `HK_P_SET_THR` | `Kb 5`         | `0x7e05` | When held*, pressing up/down increases/decreases the scroll throttle        |
 | `HK_S_MODE`    | `Kb 6`         | `0x7e06` | When held*, enables sniping                                                 |
 | `HK_S_MODE_T`  | `Kb 7`         | `0x7e07` | Toggles sniping                                                             |
@@ -397,18 +399,18 @@ liliums:Lily58:1: keyboard_post_init_user: reading eeprom, check: 1
 liliums:Lily58:1: init_state
 liliums:Lily58:1: debug_hk: state = {
 liliums:Lily58:1:       is_main_side=1
-liliums:Lily58:1:       setting_default_scale=0
-liliums:Lily58:1:       setting_sniping_scale=0
-liliums:Lily58:1:       setting_scroll_buffer=0
+liliums:Lily58:1:       setting_default_sensitivity=0
+liliums:Lily58:1:       setting_sniping_sensitivity=0
+liliums:Lily58:1:       setting_scroll_throttle=0
 liliums:Lily58:1:       main=
 liliums:Lily58:1:       {
 liliums:Lily58:1:               pointer_kind=trackpoint
 liliums:Lily58:1:               cursor_mode=default
 liliums:Lily58:1:               drag_scroll=0
 liliums:Lily58:1:               scroll_lock=off
-liliums:Lily58:1:               pointer_default_multiplier=2.00
-liliums:Lily58:1:               pointer_sniping_multiplier=1.00
-liliums:Lily58:1:               pointer_scroll_buffer_size=5
+liliums:Lily58:1:               pointer_default_sensitivity=2.00
+liliums:Lily58:1:               pointer_sniping_sensitivity=1.00
+liliums:Lily58:1:               pointer_scroll_throttle=5
 liliums:Lily58:1:       }
 liliums:Lily58:1:       peripheral=
 liliums:Lily58:1:       {
@@ -416,9 +418,9 @@ liliums:Lily58:1:               pointer_kind=tps43
 liliums:Lily58:1:               cursor_mode=default
 liliums:Lily58:1:               drag_scroll=0
 liliums:Lily58:1:               scroll_lock=off
-liliums:Lily58:1:               pointer_default_multiplier=1.50
-liliums:Lily58:1:               pointer_sniping_multiplier=1.00
-liliums:Lily58:1:               pointer_scroll_buffer_size=5
+liliums:Lily58:1:               pointer_default_sensitivity=1.50
+liliums:Lily58:1:               pointer_sniping_sensitivity=1.00
+liliums:Lily58:1:               pointer_scroll_throttle=5
 liliums:Lily58:1:       }
 liliums:Lily58:1: }
 ```
@@ -429,7 +431,7 @@ liliums:Lily58:1: }
 
 On a dual pointing device setup, it's often desirable to set one of the pointing devices to always scroll (this is done by default if the secondary one is a Pimoroni Trackball).
 
-To do this, hold shift and tap `HK_D_MODE_T`. This will toggle drag scroll on the peripheral pointing device. Test if the scroll speed is comfortable, and if not adjust it by setting the scale/scroll buffer.
+To do this, hold shift and tap `HK_D_MODE_T`. This will toggle drag scroll on the peripheral pointing device. Test if the scroll speed is comfortable, and if not adjust it by setting the scroll buffer.
 
 Finish by pressing `HK_SAVE` to persist the changes.
 

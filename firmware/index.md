@@ -255,6 +255,39 @@ make keyball/keyball44:via:flash -j8
 
 USB cable can be connected to either side of the keyboard.
 
+## Vial
+
+[Vial](https://get.vial.today/) is an alternative to VIA / Remap: a desktop app
+that edits your keymap live over USB, with no web configurator. Our Vial firmware
+lives in the [holykeebs/vial-qmk](https://github.com/holykeebs/vial-qmk) fork
+(`hk-master` branch).
+
+It builds against the **same** `users/holykeebs` overlay as the QMK firmware (see
+[Compiling](#compiling)), so every pointing-device feature described below behaves
+identically; only the configurator differs.
+
+::: info
+The keyball61plus is currently the keyboard supported on Vial. Our other keyboards
+use VIA / Remap ([above](#compiling)).
+:::
+
+Build it from the vial-qmk fork. The one-time overlay setup is shared: `qmk`'s
+`user.overlay_dir` is global, so if you already configured it for the QMK firmware
+it applies here unchanged (otherwise clone the overlay and set it as in
+[Compiling](#compiling)).
+
+```shell
+$ git clone --recurse-submodules git@github.com:holykeebs/vial-qmk.git -b hk-master
+$ cd vial-qmk
+$ make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+```
+
+Append `:flash` to flash, or copy the resulting `.uf2` to the RP2040 bootloader
+drive. Then open the [Vial app](https://get.vial.today/) to edit: the trackball
+controls appear as custom keycodes, and the **Ball availability** layout option
+(None / Right / Left / Dual) is set automatically to match the balls the firmware
+detects at boot.
+
 ## Testing
 
 1. On a split keyboard, connect the halves when none of the sides are powered.

@@ -93,7 +93,7 @@ What that means in practice:
 While on the `hk-master` branch, build it with (append `:flash` to also flash):
 
 ```shell
-make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes
 ```
 
 Use `:vial` in place of `:via` for the Vial firmware. See the

@@ -263,7 +263,7 @@ and [features](#features) on this page apply (not the Keyball custom keycodes). 
 full details. Build it with:
 
 ```shell
-make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes
 ```
 
 ## Vial
@@ -290,7 +290,7 @@ it applies here unchanged (otherwise clone the overlay and set it as in
 ```shell
 $ git clone --recurse-submodules git@github.com:holykeebs/vial-qmk.git -b hk-master
 $ cd vial-qmk
-$ make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes -e OLED_FLIP=yes
+$ make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes
 ```
 
 Append `:flash` to flash, or copy the resulting `.uf2` to the RP2040 bootloader

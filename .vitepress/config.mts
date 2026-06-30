@@ -12,7 +12,7 @@ export default defineConfig({
     siteTitle: 'holykeebs',
 
     editLink: {
-      pattern: 'https://github.com/idank/holykeebs-docs/edit/main/:path'
+      pattern: 'https://github.com/holykeebs/docs/edit/main/:path'
     },
 
     search: {
@@ -58,7 +58,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/idank/holykeebs-docs' }
+      { icon: 'github', link: 'https://github.com/holykeebs/docs' }
     ]
   }
 })

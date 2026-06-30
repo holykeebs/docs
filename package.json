@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "posthog-js": "^1.116.6",
-    "swiper": "^10.3.1"
+    "swiper": "^14.0.1"
   }
 }

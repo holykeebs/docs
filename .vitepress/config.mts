@@ -1,10 +1,22 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, type HeadConfig } from 'vitepress'
+
+// Cloudflare Pages sets CF_PAGES=1 during its builds. The docs-next preview
+// deploys there, while production docs deploy to GitHub Pages — so keep the
+// preview out of search results so it can't compete with the real docs.
+const isPreview = process.env.CF_PAGES === '1'
+
+const head: HeadConfig[] = [
+  ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+]
+if (isPreview) {
+  head.push(['meta', { name: 'robots', content: 'noindex, nofollow' }])
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "holykeebs Documentation",
   description: "holykeebs Documentation",
-  head: [['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }]],
+  head,
   lastUpdated: true,
     themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

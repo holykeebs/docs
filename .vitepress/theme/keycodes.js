@@ -1,8 +1,10 @@
-// HK_* keycode name -> VIA keycode (hex string, as pasted into Remap / VIA's
+// Custom keycode name -> VIA keycode (hex string, as pasted into Remap / VIA's
 // "Any" key or Vial's custom keycode field). Single source for the markdown
 // transform (which decides what becomes clickable) and the HkKeycode component
-// (which copies the code). Mirrors the enum in users/holykeebs/holykeebs.h of
-// the holykeebs/qmk-userspace repo; keep in sync when keycodes are added.
+// (which copies the code). The HK_* entries mirror the enum in
+// users/holykeebs/holykeebs.h of the holykeebs/qmk-userspace repo; the Keyball
+// entries mirror the Keyball firmware's custom keycodes. Keep in sync when
+// keycodes are added.
 const codes = {
   HK_SAVE: '0x7e00',
   HK_RESET: '0x7e01',
@@ -43,7 +45,29 @@ const longNames = {
   HK_BONGO_TOGGLE: 'HK_BONGO_T',
 }
 
-export const HK_KEYCODES = {
+// The Keyball firmware's custom keycodes (Keyball 39/44/61, not the Keyball61+,
+// which runs on the holykeebs userspace and uses the HK_* keycodes above).
+const keyball = {
+  KBC_RST: '0x7e00',
+  KBC_SAVE: '0x7e01',
+  CPI_I100: '0x7e02',
+  CPI_D100: '0x7e03',
+  CPI_I1K: '0x7e04',
+  CPI_D1K: '0x7e05',
+  SCRL_TO: '0x7e06',
+  SCRL_MO: '0x7e07',
+  SCRL_DVI: '0x7e08',
+  SCRL_DVD: '0x7e09',
+  AML_TO: '0x7e0a',
+  AML_I50: '0x7e0b',
+  AML_D50: '0x7e0c',
+  SSNP_VRT: '0x7e0d',
+  SSNP_HOR: '0x7e0e',
+  SSNP_FRE: '0x7e0f',
+}
+
+export const KEYCODES = {
   ...codes,
   ...Object.fromEntries(Object.entries(longNames).map(([long, short]) => [long, codes[short]])),
+  ...keyball,
 }

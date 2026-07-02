@@ -1,12 +1,12 @@
 <script setup>
 import { computed, ref, onBeforeUnmount } from 'vue'
-import { HK_KEYCODES } from '../keycodes.js'
+import { KEYCODES } from '../keycodes.js'
 
 const props = defineProps({
   name: { type: String, required: true },
 })
 
-const code = computed(() => HK_KEYCODES[props.name])
+const code = computed(() => KEYCODES[props.name])
 const copied = ref(false)
 let hideTimer = null
 

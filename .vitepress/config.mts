@@ -1,4 +1,5 @@
 import { defineConfig, type HeadConfig } from 'vitepress'
+import { HK_KEYCODES } from './theme/keycodes.js'
 
 // Cloudflare Pages sets CF_PAGES=1 during its builds. The docs-next preview
 // deploys there, while production docs deploy to GitHub Pages — so keep the
@@ -18,6 +19,21 @@ export default defineConfig({
   description: "holykeebs Documentation",
   head,
   lastUpdated: true,
+  markdown: {
+    config(md) {
+      // Emit known `HK_*` inline code as the HkKeycode component (registered in
+      // theme/index.js): clickable, copies the VIA keycode to the clipboard.
+      // Everything else renders as regular inline code.
+      const defaultRender = md.renderer.rules.code_inline!
+      md.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
+        const content = tokens[idx].content
+        if (Object.prototype.hasOwnProperty.call(HK_KEYCODES, content)) {
+          return `<HkKeycode name="${content}" />`
+        }
+        return defaultRender(tokens, idx, options, env, self)
+      }
+    },
+  },
     themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.svg',

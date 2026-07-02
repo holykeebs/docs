@@ -358,6 +358,14 @@ On a keyboard with a pointing device and screen, the screen will display the fol
 |  2  | On the right, displays the sensitivity, scroll throttle, drag scroll mode, and scroll lock |
 |  3  | Displays the active layers and whether automatic mouse layer is on                              |
 
+### Bongocat
+
+The OLED can show the classic bongocat animation instead of the info panels. The cat reacts to your typing speed: it sits idle below 20 WPM, raises its paws as you speed up, and drums away at 40 WPM and above. The current WPM is shown in the corner, along with a caps lock indicator. When you stop typing, the screen goes to sleep after a timeout and any keypress wakes it.
+
+Bongocat is included in every OLED firmware, but the screen starts out showing the info panels. Use the `HK_BONGO_T` keycode to switch the animation on or off at runtime; hold shift to switch it on the other half's screen instead. Each half is toggled independently, so you can have the info panels on one side and the cat on the other. Use `HK_SAVE` to persist the choice across restarts.
+
+If you compile your own firmware and want to leave the animation out, pass `-e BONGO_ENABLE=no`.
+
 ### Usage
 
 The following keycodes allow control of the above features. Orders that use the build service and have a pointing device come flashed with a default firmware that already puts these keys at sane locations. See [keymaps](../keymaps/index.md) for more details.

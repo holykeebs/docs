@@ -2,10 +2,6 @@
 import NameGenerator from './NameGenerator.vue'
 </script>
 
-<head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-prefixed.min.css">
-</head>
-
 # Firmware
 
 [QMK](https://docs.qmk.fm/#/) is a popular free and open-source keyboard firmware. All of our keyboards are supported by QMK and VIA / Remap for dynamic key assignments and layering. The firmware provides features that streamline pointing device usage, which is a focus of the store. These include:

@@ -79,16 +79,14 @@ If you wish to have your current configuration persist across reboots, use the `
 
 ## Keyball61+
 
-The Keyball61+ is a 61-key Keyball with a PMW3360 trackball.
+The Keyball61+ is an improved version of the popular Keyball61. It comes with two horizontal encoders on each side, replacing the switch below the controller. Each encoder is clickable so in total there are still 61 keys. The encoders remove the need for drag scrolling with the trackball (if you prefer that, you can map the encoders to something else). Additionally, the Keyball61 doesn't come in kit form, only soldered or assembled. This allows us to offer it at a lower price point than normal.
 
-Its firmware is built on the holykeebs userspace, the same one our other
-pointing-device keyboards use, rather than the Keyball firmware described above.
+The firmware is built on the holykeebs userspace, the same one our other
+pointing device keyboards use, rather than the Keyball firmware described above.
 What that means in practice:
 
 - The custom keycodes are the `HK_*` keycodes documented on the [Firmware](../../../firmware/index.md#features) page, **not** the [Custom Keycodes](#custom-keycodes) listed above.
-- The trackball is set up automatically, so there's no pointing-device option to choose.
-- High-resolution scrolling is on by default.
-- It works with both VIA / Remap and [Vial](../../../firmware/index.md#vial).
+- Due to popular demand, the firmware is compatible with [Vial](../../../firmware/index.md#vial).
 
 While on the `hk-master` branch, build it with (append `:flash` to also flash):
 

@@ -35,16 +35,30 @@ const pointingToFileName = {
     "Pimoroni Trackball": "trackball"
 }
 
+const hasPointingDevice = computed(() =>
+    isPointingDevice(selected_left_controller.value) || isPointingDevice(selected_right_controller.value));
+
+// Combinations the firmware matrix doesn't build (no precompiled file exists).
+const unsupportedCombo = computed(() => {
+    const pair = [selected_left_controller.value, selected_right_controller.value];
+    return pair.includes("Cirque35") && pair.includes("Cirque40");
+});
+
 const firmwareName = computed(() => {
     if (selected_keyboard.value.startsWith("Keyball")) {
         return [`${keyboardToQmkName[selected_keyboard.value]}_via.uf2`];
     }
 
-    let keymap = "via";
-    if (isPointingDevice(selected_left_controller.value) || isPointingDevice(selected_right_controller.value)) {
-        keymap = "hk";
+    const kb = keyboardToQmkName[selected_keyboard.value];
+
+    // Without a pointing device the firmware is the `via` keymap with a single
+    // none/oled slot, and no debug variant exists (debug builds are hk-only).
+    if (!hasPointingDevice.value) {
+        const oled = selected_left_controller.value === "OLED" || selected_right_controller.value === "OLED";
+        return [`${kb}_via_${oled ? "oled" : "none"}.uf2`];
     }
-    const base_name = `${keyboardToQmkName[selected_keyboard.value]}_${keymap}_${pointingToFileName[selected_left_controller.value]}_${pointingToFileName[selected_right_controller.value]}`;
+
+    const base_name = `${kb}_hk_${pointingToFileName[selected_left_controller.value]}_${pointingToFileName[selected_right_controller.value]}`;
 
     const debug_prefix = debug_enabled.value === "yes" ? "debug_" : "";
 
@@ -87,7 +101,8 @@ function firmwareDownloadUrl(file_name) {
   </label>
 </div>
 
-<div class="field">
+<!-- Debug builds only exist for pointing-device (hk) configurations. -->
+<div class="field" v-if="hasPointingDevice && !unsupportedCombo">
   <span class="label">Debug</span>
   <p class="help">In debug mode, the firmware will output extra information into the console, including the current configuration. This is useful if your keyboard doesn't have an OLED and you're trying to tune the features described later on this page.</p>
   <label class="radio">
@@ -99,7 +114,10 @@ function firmwareDownloadUrl(file_name) {
     No
   </label>
 </div>
-<p>
+<p v-if="unsupportedCombo">
+  This combination isn't available as a precompiled firmware. Pick the same touchpad size on both sides, or reach out if you need this configuration.
+</p>
+<p v-else>
   To flash, we need to get into the bootloader and copy <a :href="firmwareDownloadUrl(firmwareName[0])" download>{{ firmwareName[0] }}</a>
   <span v-if="firmwareName.length > 1"> (flashed on the left side), <a :href="firmwareDownloadUrl(firmwareName[1])" download>{{ firmwareName[1] }}</a> (flashed on the right side)</span>
   into the USB drive called <code>RPI-RP2</code>. After copying, the drive should disappear and the firmware will have updated.

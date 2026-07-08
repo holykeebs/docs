@@ -6,3 +6,7 @@ node_modules
 .vitepress/dist
 *.ai
 *Thumbs.db*
+
+# Personal agent-context symlinks (point outside the repo).
+CLAUDE.md
+AGENTS.md

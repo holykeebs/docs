@@ -49,7 +49,7 @@ Import tax is charged at checkout, and our shipping partner handles payment to t
 #### Rest of the world {#taxes-rest-of-world}
 
 ::: warning HEADS UP
-The EU is ending the duty-free exemption for low-value parcels (goods worth €150 or less). From 1 July 2026, these orders incur a flat €3 customs duty on import. Our carrier bills this to us, so we add it as a €3 charge to EU orders of €150 or less. Orders above €150 are unaffected; they're charged standard value-based duties, as they are today.
+The EU is ending the duty-free exemption for low-value parcels (goods worth €150 or less). From 1 July 2026, these orders incur a flat €3 customs duty on import.
 
 For details, see the [Council of the EU announcement](https://www.consilium.europa.eu/en/press/press-releases/2026/02/11/council-gives-final-green-light-to-new-customs-duty-rules-for-small-parcels/).
 :::

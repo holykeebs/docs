@@ -278,7 +278,11 @@ The [Keyball61+](#keyball61) is currently the keyboard supported on Vial. Our ot
 keyboards use VIA / Remap ([above](#compiling)).
 :::
 
-Build it from the vial-qmk fork. The one-time overlay setup is shared: `qmk`'s
+A precompiled Vial image is available: in the [Precompiled](#precompiled)
+selector above, pick Keyball61+ and the Vial configurator. Building from
+source is only needed if you want to customize the firmware.
+
+To build it from the vial-qmk fork: the one-time overlay setup is shared, `qmk`'s
 `user.overlay_dir` is global, so if you already configured it for the QMK firmware
 it applies here unchanged (otherwise clone the overlay and set it as in
 [Compiling](#compiling)).
@@ -291,9 +295,8 @@ $ make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes
 
 Append `:flash` to flash, or copy the resulting `.uf2` to the RP2040 bootloader
 drive. Then open the [Vial app](https://get.vial.today/) to edit: the trackball
-controls appear as custom keycodes, and the **Ball availability** layout option
-(None / Right / Left / Dual) is set automatically to match the balls the firmware
-detects at boot.
+controls appear as custom keycodes, and the trackball side is detected
+automatically.
 
 ## Testing
 

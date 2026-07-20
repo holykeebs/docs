@@ -19,6 +19,8 @@ export default defineConfig({
   description: "holykeebs Documentation",
   head,
   lastUpdated: true,
+  // Agent context files (symlinks into the qmk checkout), not site pages.
+  srcExclude: ['CLAUDE.md', 'AGENTS.md'],
   markdown: {
     config(md) {
       // Emit known custom keycodes (HK_*, Keyball) written as inline code as the

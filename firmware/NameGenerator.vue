@@ -2,13 +2,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const keyboards = ["Corne", "Sweep", "Span", "Lily58", "Keyball39", "Keyball44", "Keyball61"]
+const keyboards = ["Corne", "Sweep", "Span", "Lily58", "Keyball39", "Keyball44", "Keyball61", "Keyball61+"]
 const controller_option = ["None", "OLED", "TPS43", "Trackpoint", "Cirque35", "Cirque40", "Pimoroni Trackball"]
 
 const selected_keyboard = ref(keyboards[0])
 const selected_left_controller = ref(controller_option[0])
 const selected_right_controller = ref(controller_option[0])
 const debug_enabled = ref("no")
+const selected_configurator = ref("VIA")
 
 function isPointingDevice(controller) {
     // Check if there's a pointing device on the controller.
@@ -22,7 +23,8 @@ const keyboardToQmkName = {
     "Lily58": "lily58_rev1",
     "Keyball39": "keyball_keyball39",
     "Keyball44": "keyball_keyball44",
-    "Keyball61": "keyball_keyball61"
+    "Keyball61": "keyball_keyball61",
+    "Keyball61+": "holykeebs_keyball61plus"
 }
 
 const pointingToFileName = {
@@ -38,13 +40,26 @@ const pointingToFileName = {
 const hasPointingDevice = computed(() =>
     isPointingDevice(selected_left_controller.value) || isPointingDevice(selected_right_controller.value));
 
+// The Keyball61+ has no build-time options: dual trackball support and the OLED
+// are always compiled in, and the halves are runtime-detected. The only choice
+// is which configurator the firmware speaks, VIA or Vial.
+const isKeyball61Plus = computed(() => selected_keyboard.value === "Keyball61+");
+
 // Combinations the firmware matrix doesn't build (no precompiled file exists).
 const unsupportedCombo = computed(() => {
+    // Keyballs ignore the controller selection entirely, so no combination is
+    // unsupported for them.
+    if (selected_keyboard.value.startsWith("Keyball")) return false;
     const pair = [selected_left_controller.value, selected_right_controller.value];
     return pair.includes("Cirque35") && pair.includes("Cirque40");
 });
 
 const firmwareName = computed(() => {
+    if (isKeyball61Plus.value) {
+        const keymap = selected_configurator.value === "Vial" ? "vial" : "via";
+        return [`${keyboardToQmkName[selected_keyboard.value]}_${keymap}_oled.uf2`];
+    }
+
     if (selected_keyboard.value.startsWith("Keyball")) {
         return [`${keyboardToQmkName[selected_keyboard.value]}_via.uf2`];
     }
@@ -83,7 +98,7 @@ function firmwareDownloadUrl(file_name) {
   </label>
 </div>
 
-<div class="field">
+<div class="field" v-if="!isKeyball61Plus">
   <label class="label">
     Left Controller Has
     <select name="left_controller" v-model="selected_left_controller">
@@ -92,7 +107,7 @@ function firmwareDownloadUrl(file_name) {
   </label>
 </div>
 
-<div class="field">
+<div class="field" v-if="!isKeyball61Plus">
   <label class="label">
     Right Controller Has
     <select name="right_controller" v-model="selected_right_controller">
@@ -101,8 +116,23 @@ function firmwareDownloadUrl(file_name) {
   </label>
 </div>
 
+<!-- The Keyball61+ is one image per configurator: trackballs and the OLED are
+     always compiled in, so the only pick is VIA or Vial. -->
+<div class="field" v-if="isKeyball61Plus">
+  <span class="label">Configurator</span>
+  <p class="help">VIA keyboards are configured in the web based <a href="https://usevia.app/">VIA app</a>. Vial uses the <a href="https://get.vial.today/">Vial desktop app</a> instead.</p>
+  <label class="radio">
+    <input type="radio" name="configurator" value="VIA" v-model="selected_configurator" />
+    VIA
+  </label>
+  <label class="radio">
+    <input type="radio" name="configurator" value="Vial" v-model="selected_configurator" />
+    Vial
+  </label>
+</div>
+
 <!-- Debug builds only exist for pointing-device (hk) configurations. -->
-<div class="field" v-if="hasPointingDevice && !unsupportedCombo">
+<div class="field" v-if="hasPointingDevice && !unsupportedCombo && !isKeyball61Plus">
   <span class="label">Debug</span>
   <p class="help">In debug mode, the firmware will output extra information into the console, including the current configuration. This is useful if your keyboard doesn't have an OLED and you're trying to tune the features described later on this page.</p>
   <label class="radio">

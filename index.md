@@ -9,10 +9,6 @@ hero:
     src: /logo.svg
 
 features:
-  - icon: 🛒
-    title: Buyer's Guide
-    details: Understand the various options when buying a keyboard.
-    link: /guides/buyers-guide/
   - icon: 🧑🏻‍🔧
     title: Keyboard Build Guide
     details: Learn how to build a keyboard from start to finish.

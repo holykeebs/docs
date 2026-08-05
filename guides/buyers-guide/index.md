@@ -15,6 +15,17 @@ import pointingdevice2 from './pointing-device-2.jpg';
 
 # Buyer's Guide
 
+::: tip This guide now lives in the configurator
+Everything below is built into each keyboard's product page. As you pick your
+options, the configurator explains them where you choose them and the 3D
+preview shows the result on your actual board - including the parts this page
+could only describe in words, like case colours, keycap profiles and key
+spacing.
+
+Start from [Keyboards](https://holykeebs.com/collections/keyboards). This page
+is kept for reference.
+:::
+
 At holykeebs, we specialize in ergonomic keyboards with pointing devices.
 
 A mechanical keyboard is comprised of various parts, allowing a relatively high degree of customization compared to a regular keyboard.

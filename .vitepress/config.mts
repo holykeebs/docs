@@ -56,7 +56,6 @@ export default defineConfig({
       {
         text: 'Guides',
         items: [
-          { text: 'Buyer\'s Guide', link: '/guides/buyers-guide/' },
           {
             text: 'Keyboards',
             items: [

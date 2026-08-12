@@ -2,3 +2,55 @@
     --vp-c-brand-1: rgb(84, 186, 185);
     --vp-c-brand-2: rgb(68, 150, 150);
 } */
+
+/* Print: strip the site chrome so pages print as just their content. The
+   keymap pages become a one-page printable diagram (Ctrl+P = print-ready). */
+@media print {
+    html,
+    body {
+        height: auto !important;
+    }
+
+    .Layout {
+        min-height: 0 !important;
+    }
+
+    .VPNav,
+    .VPLocalNav,
+    .VPSidebar,
+    .VPDocAside,
+    .VPDocFooter,
+    .VPFooter,
+    .aside {
+        display: none !important;
+    }
+
+    .VPContent,
+    .VPDoc,
+    .VPDoc .container,
+    .VPDoc .content {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+
+    .vp-doc h1 {
+        font-size: 18px;
+        margin: 0 0 4mm;
+        break-after: avoid-page;
+    }
+
+    /* Fit tall keymap diagrams on a single page. */
+    .vp-doc img {
+        max-height: 240mm;
+        width: auto;
+        max-width: 100%;
+        margin: 0 auto;
+        display: block;
+        break-inside: avoid;
+    }
+}
+
+@page {
+    margin: 8mm;
+}

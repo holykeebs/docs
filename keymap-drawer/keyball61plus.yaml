@@ -1,0 +1,30 @@
+layout:
+  qmk_info_json: keyball61plus-info.json
+  layout_name: LAYOUT_right_ball
+layers:
+  BASE:
+    - ["Esc", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "`"]
+    - ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "-"]
+    - ["LCtrl", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'"]
+    - ["LShft", "Z", "X", "C", "V", "B", {t: "Mouse Btn 1", type: wheel}, {t: "Mouse Btn 2", type: wheel}, "N", "M", ",", ".", "/", "RShft"]
+    - ["[", "LCtrl", "LAlt", "LGui", {t: "Esc", h: "Lower"}, "Space", "Del", "Enter", {t: "Bspace", h: "Upper"}, "Bspace", "]"]
+  LOWER:
+    - [null, null, null, null, null, null, null, null, null, null, null, null]
+    - [null, "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", null]
+    - [null, "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", null]
+    - ["Drag", "Mouse Btn 4", "Mouse Btn 5", "Mouse Btn 1", "Mouse Btn 2", "Snipe", {type: wheel}, {type: wheel}, "|", "`", "+", "{", "}", null]
+    - [null, null, null, null, {type: held}, null, null, null, null, null, null]
+  UPPER:
+    - [null, null, null, null, null, null, null, null, null, null, null, null]
+    - ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
+    - [null, null, null, null, null, null, null, "Left", "Down", "Up", "Right", null]
+    - [null, null, null, null, null, null, {type: wheel}, {type: wheel}, "+", "=", "[", "]", "\\", null]
+    - [null, null, null, null, null, null, null, null, {type: held}, null, null]
+  CONFIG:
+    - [null, null, null, null, null, null, null, null, null, null, null, null]
+    - ["Boot", "Dump Config", "Save Config", "Reset Config", "Bongocat", "Cycle Scroll Mode", "RGB Toggle", "RGB Mode", "Hue", "Sat", "Bright", "Boot"]
+    - ["Clear EEPROM", "Set Default", "Set Sniping", "Set Scroll", null, "Toggle Sniping", "Up", "Down", null, null, null, "Clear EEPROM"]
+    - ["LShft", null, null, null, null, "Toggle Drag", {type: wheel}, {type: wheel}, "Toggle AML", "AML +50ms", "AML -50ms", "Invert Scroll", null, null]
+    - [null, null, null, null, {type: held}, null, null, null, {type: held}, null, null]
+combos:
+  - {p: [54, 58], k: CONFIG, a: bottom, l: ['BASE'], offset: 1}

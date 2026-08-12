@@ -32,6 +32,13 @@ draw_config:
     svg.keymap {
                     font-size: 11px;
                 }
+    /* scroll wheel presses (keyball61plus) */
+    rect.wheel {
+                    fill: #cfe3f5;
+                }
+    @media (prefers-color-scheme: dark) {
+                    rect.wheel { fill: #2a4a66; }
+                }
   footer_text: Hold a Set* key and tap Up/Down to configure the main pointing device. Holding shift will configure the peripheral device.
   shrink_wide_legends: 7
   style_layer_activators: true

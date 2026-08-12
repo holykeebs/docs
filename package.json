@@ -8,7 +8,6 @@
     "vitepress": "^1.6.4"
   },
   "dependencies": {
-    "posthog-js": "^1.116.6",
     "swiper": "^14.0.1"
   }
 }

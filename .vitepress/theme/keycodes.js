@@ -22,6 +22,8 @@ const codes = {
   HK_AML_UP: '0x7e0d',
   HK_AML_DN: '0x7e0e',
   HK_BONGO_T: '0x7e0f',
+  HK_ENC_SCR_U: '0x7e10',
+  HK_ENC_SCR_D: '0x7e11',
 }
 
 // The long-form names from the enum resolve to the same codes, so prose that
@@ -43,6 +45,8 @@ const longNames = {
   HK_AUTO_MOUSE_TIMEOUT_UP: 'HK_AML_UP',
   HK_AUTO_MOUSE_TIMEOUT_DOWN: 'HK_AML_DN',
   HK_BONGO_TOGGLE: 'HK_BONGO_T',
+  HK_ENCODER_SCROLL_UP: 'HK_ENC_SCR_U',
+  HK_ENCODER_SCROLL_DOWN: 'HK_ENC_SCR_D',
 }
 
 // The Keyball firmware's custom keycodes (Keyball 39/44/61, not the Keyball61+,

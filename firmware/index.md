@@ -387,6 +387,8 @@ The following keycodes allow control of the above features. Orders that use the 
 | `HK_AML_UP`    | `Kb 13`        | Increases the auto-mouse layer timeout by 50ms                              |
 | `HK_AML_DN`    | `Kb 14`        | Decreases the auto-mouse layer timeout by 50ms                              |
 | `HK_BONGO_T`   | `Kb 15`        | Toggles the bongocat OLED animation (hold shift to target the peripheral OLED) |
+| `HK_ENC_SCR_U` | `Kb 16`        | Scrolls up by one encoder detent, for a scroll wheel's rotation             |
+| `HK_ENC_SCR_D` | `Kb 17`        | Scrolls down by one encoder detent, for a scroll wheel's rotation           |
 
 \* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device.
 

@@ -142,8 +142,18 @@ svg.keymap {
 rect.wheel {
                 fill: #cfe3f5;
             }
+/* scroll wheel rotation, drawn as a dial (keyball61plus) */
+rect.encoder {
+                fill: #cfe3f5;
+                rx: 26px;
+                ry: 26px;
+            }
+text.encoder.tap {
+                font-size: 12px;
+            }
 @media (prefers-color-scheme: dark) {
                 rect.wheel { fill: #2a4a66; }
+                rect.encoder { fill: #2a4a66; }
             }</style>
 <g transform="translate(30, 0)" class="layer-BASE">
 <text x="0" y="28" class="label" id="BASE">BASE:</text>
@@ -398,6 +408,18 @@ rect.wheel {
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap">]</text>
 </g>
+<g transform="translate(364, 162)" class="key encoder keypos-61">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
+<g transform="translate(560, 162)" class="key encoder keypos-62">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
 <g class="combo combopos-0">
 <path d="M430,371 h-156 a6.0,6.0 0 0 1 -6.0,-6.0 v-67" class="combo"/>
 <path d="M430,371 h156 a6.0,6.0 0 0 0 6.0,-6.0 v-60" class="combo"/>
@@ -632,6 +654,18 @@ rect.wheel {
 <g transform="translate(896, 286)" class="key keypos-60">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 </g>
+<g transform="translate(364, 162)" class="key encoder keypos-61">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
+<g transform="translate(560, 162)" class="key encoder keypos-62">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
 </g>
 </g>
 <g transform="translate(30, 835)" class="layer-UPPER">
@@ -840,6 +874,18 @@ rect.wheel {
 </g>
 <g transform="translate(896, 286)" class="key keypos-60">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
+</g>
+<g transform="translate(364, 162)" class="key encoder keypos-61">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
+<g transform="translate(560, 162)" class="key encoder keypos-62">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
 </g>
 </g>
 </g>
@@ -1088,6 +1134,18 @@ rect.wheel {
 </g>
 <g transform="translate(896, 286)" class="key keypos-60">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
+</g>
+<g transform="translate(364, 162)" class="key encoder keypos-61">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
+</g>
+<g transform="translate(560, 162)" class="key encoder keypos-62">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key encoder"/>
+<text x="0" y="0" class="key encoder tap">
+<tspan x="0" dy="-0.6em">Scroll</tspan><tspan x="0" dy="1.2em">↑↓</tspan>
+</text>
 </g>
 </g>
 </g>

@@ -390,7 +390,7 @@ The following keycodes allow control of the above features. Orders that use the 
 | `HK_ENC_SCR_U` | `Kb 16`        | Scrolls up by one encoder detent, for a scroll wheel's rotation             |
 | `HK_ENC_SCR_D` | `Kb 17`        | Scrolls down by one encoder detent, for a scroll wheel's rotation           |
 
-\* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device.
+\* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device. On the Keyball61+, where USB can go in either half, the unshifted keycodes always target the half that has the trackball; shift targets the other half.
 
 ### Debugging
 

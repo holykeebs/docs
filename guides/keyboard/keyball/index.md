@@ -36,7 +36,9 @@ For build help that's not specific to Keyball, you're welcome to visit the [Keyb
 
 ## Firmware
 
-Keyball's firmware is maintained in a dedicated repository by the designer of the keyboard and is written for Pro Micro controllers. A port of the firmware for RP2040 controllers is available in this holykeebs [repository](https://github.com/holykeebs/qmk_firmware/tree/hk-master/keyboards/keyball). It's recommended to use the [precompiled firmware](../../../firmware/index.md#precompiled).
+Every holykeebs Keyball runs the holykeebs userspace firmware, the same one our other pointing device keyboards use, with RP2040 controllers, QMK's native PMW3360 driver, per-key RGB Matrix and the `HK_*` keycodes described on the [Firmware](../../../firmware/index.md#features) page. The boards live in the holykeebs [repository](https://github.com/holykeebs/qmk_firmware/tree/hk-master/keyboards/holykeebs), and it's recommended to use the [precompiled firmware](../../../firmware/index.md#precompiled), which is configured with the [Vial app](https://get.vial.today/).
+
+On the Keyball 39, 44 and 61 one image covers every trackball configuration: the firmware detects at boot which halves carry a ball and updates the "Ball availability" layout in Vial to match, so the thumb keys under a ball disappear from the editor. The [Keyball61+](#keyball61) detects its hand from the sensor instead, so its trackball must be on the right half.
 
 ::: danger
 Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. This can short the GPIO pins of the controllers.
@@ -44,57 +46,32 @@ Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. Th
 
 If you'd like to compile your own firmware, see the [Firmware](../../../firmware/index.md) page on setting up the environment.
 
-Once you have your own clone, while on the `hk-master` branch, flash both sides using (adjust the name to the Keyball you have):
+Once you have your own clone, while on the `hk-master` branch, build with (adjust the name to the Keyball you have, and append `:flash` to also flash):
 
 ```shell
-make keyball/keyball44:via:flash -j8
+make holykeebs/keyball44:vial -e USER_NAME=holykeebs -e OLED=yes
 ```
 
-USB cable can be connected to either side of the keyboard. If your trackball doesn't work, try switching the cable to the side with the trackball.
+The same image goes on both halves, and the USB cable can be connected to either side of the keyboard. The [VIA](../../../firmware/index.md#via) variant builds from the qmk_firmware fork with `:via` in place of `:vial`.
 
 ## Custom Keycodes
 
-Keyball comes with custom keycodes that provide access to Keyball features without needing to compile your own firmware. These features are accessible through the following *Special Keycodes* that can be assigned when using [Remap](https://remap-keys.app):
-
-| Keycode    | Value on Remap  | Description                                                       |
-|:-----------|:----------------|:------------------------------------------------------------------|
-| `KBC_RST`  | `Kb 0`          | Reset Keyball configuration                                       |
-| `KBC_SAVE` | `Kb 1`          | Save Keyball configuration to memory (EEPROM)                     |
-| `CPI_I100` | `Kb 2`          | Increase pointer speed by 100 CPI (max 12000)                     |
-| `CPI_D100` | `Kb 3`          | Decrease pointer speed by 100 CPI (min 100)                       |
-| `CPI_I1K`  | `Kb 4`          | Increase pointer speed by 1000 CPI (max 12000)                    |
-| `CPI_D1K`  | `Kb 5`          | Decrease pointer speed by 1000 CPI (min 100)                      |
-| `SCRL_TO`  | `Kb 6`          | Toggle scroll mode                                                |
-| `SCRL_MO`  | `Kb 7`          | Enable scroll mode (while held)                                   |
-| `SCRL_DVI` | `Kb 8`          | Decrease scroll speed (max D7 = 1/128)                            |
-| `SCRL_DVD` | `Kb 9`          | Increase scroll speed (min D0 = 1/1)                              |
-| `AML_TO`   | `Kb 10`         | Toggle automatic mouse layer                                      |
-| `AML_I50`  | `Kb 11`         | Increase automatic mouse layer timeout by 50ms (max 1000ms)       |
-| `AML_D50`  | `Kb 12`         | Decrease automatic mouse layer timeout by 50ms (min 100ms)        |
-| `SSNP_VRT` | `Kb 13`         | Lock scroll direction to vertical only                            |
-| `SSNP_HOR` | `Kb 14`         | Lock scroll direction to horizontal only                          |
-| `SSNP_FRE` | `Kb 15`         | Disable scroll direction lock (free scroll)                       |
-
-If you wish to have your current configuration persist across reboots, use the `KBC_SAVE` keycode to save it to memory. Please note that each half of the Keyball has separate memory, so if you wish to have same behavior regardless of which half is plugged in, you will need to repeat the configuration for each half.
+The pointer settings are controlled with the `HK_*` keycodes documented on the [Firmware](../../../firmware/index.md#features) page; they appear by name in Vial's User tab. The default keymap keeps the Keyball convention of a settings layer on the left inner thumb: holding it also puts the trackball into scroll mode.
 
 ## Keyball61+
 
 The Keyball61+ is an improved version of the popular Keyball61. It comes with two horizontal encoders on each side, replacing the switch below the controller. Each encoder is clickable so in total there are still 61 keys. The encoders remove the need for drag scrolling with the trackball (if you prefer that, you can map the encoders to something else). Additionally, the Keyball61 doesn't come in kit form, only soldered or assembled. This allows us to offer it at a lower price point than normal.
 
-The firmware is built on the holykeebs userspace, the same one our other
-pointing device keyboards use, rather than the Keyball firmware described above.
-What that means in practice:
-
-- The custom keycodes are the `HK_*` keycodes documented on the [Firmware](../../../firmware/index.md#features) page, **not** the [Custom Keycodes](#custom-keycodes) listed above.
-- Due to popular demand, the firmware is compatible with [Vial](../../../firmware/index.md#vial).
-
-While on the `hk-master` branch, build it with (append `:flash` to also flash):
+The firmware is the same holykeebs userspace firmware as the other Keyballs,
+with the encoders mapped to scrolling (`HK_ENC_SCR_U`, `HK_ENC_SCR_D`) and a
+lily58-style keymap. While on the `hk-master` branch, build it with (append
+`:flash` to also flash):
 
 ```shell
-make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes
+make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes
 ```
 
-Use `:vial` in place of `:via` for the Vial firmware. See the
+See the
 [Firmware](../../../firmware/index.md) page for environment setup and the full
 feature reference.
 

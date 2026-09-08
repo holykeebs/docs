@@ -4,7 +4,7 @@ import NameGenerator from './NameGenerator.vue'
 
 # Firmware
 
-[QMK](https://docs.qmk.fm/#/) is a popular free and open-source keyboard firmware. All of our keyboards are supported by QMK and VIA / Remap for dynamic key assignments and layering. The firmware provides features that streamline pointing device usage, which is a focus of the store. These include:
+[QMK](https://docs.qmk.fm/#/) is a popular free and open-source keyboard firmware. All of our keyboards run it, with [Vial](https://get.vial.today/) for dynamic key assignments and layering: a desktop app that edits your keymap live over USB. The firmware provides features that streamline pointing device usage, which is a focus of the store. These include:
 
 - sensitivity: adjusts how far the cursor moves for a given motion of the pointing device. Useful for large screens or cases where fine grained movement is necessary. Supports two modes, default and "sniping", each with its own sensitivity. How it's applied is device dependent: a software movement factor, or the hardware CPI on sensors that support it.
 - drag scroll mode: convert mouse moves into scrolling (similar to middle mouse click).
@@ -13,8 +13,8 @@ import NameGenerator from './NameGenerator.vue'
 
 All of the above can be adjusted on the fly without flashing a new firmware. See [below](#features) for a more in-depth walkthrough.
 
-::: details Keyball/Killer Whale
-These keyboards have a firmware specific to them with similar features as above.
+::: details Killer Whale
+The Killer Whale has a firmware specific to it with similar features as above.
 :::
 
 ::: info
@@ -27,12 +27,12 @@ Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. Th
 
 ## Source Code
 
-The source code for all keyboards can be found on the `hk-master` branch of https://github.com/holykeebs/qmk_firmware. This repo is periodically kept up to date with main QMK.
+The precompiled firmware is built from the `hk-master` branch of https://github.com/holykeebs/vial-qmk, our fork of Vial's QMK. The same keyboards also live on the `hk-master` branch of https://github.com/holykeebs/qmk_firmware, which tracks main QMK more closely and builds the [VIA](#via) variant.
 
 The custom logic lives in two places:
 
-- The shared, cross-keyboard logic is in `users/holykeebs`, which is kept in a separate [QMK External Userspace](https://docs.qmk.fm/newbs_external_userspace) overlay repository (https://github.com/holykeebs/qmk-userspace), shared across our QMK and Vial forks.
-- The per-keyboard code lives under the specific keyboard you're flashing for, in the qmk_firmware repo above.
+- The shared, cross-keyboard logic is in `users/holykeebs`, which is kept in a separate [QMK External Userspace](https://docs.qmk.fm/newbs_external_userspace) overlay repository (https://github.com/holykeebs/qmk-userspace), shared across both forks.
+- The per-keyboard code lives under `keyboards/holykeebs/<keyboard>`, identical in both forks apart from the keymaps.
 
 Some scaffolding changes were also required in core QMK, but these are quite limited.
 
@@ -47,7 +47,7 @@ The userspace changes are simply the entire contents of the [overlay repository]
 
 ## Precompiled
 
-Precompiled firmwares for all possible configurations are available [here](https://github.com/holykeebs/qmk_compiled/releases/tag/latest). Each file is named according to its configuration. Change the selection below to match your keyboard:
+Precompiled firmwares for all possible configurations are available [here](https://github.com/holykeebs/qmk_compiled/releases/tag/latest). Each file is named according to its configuration and is configured with the [Vial app](https://get.vial.today/). Change the selection below to match your keyboard:
 
 <NameGenerator />
 
@@ -67,12 +67,11 @@ Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. Th
 
 Since many of our keyboards share common features such as OLED / Pointing Devices, these are supported via QMK's [Userspace feature](https://docs.qmk.fm/#/feature_userspace): this allows the logic to be separated from a specific keyboard / keymap. The shared userspace is maintained as a standalone [External Userspace](https://docs.qmk.fm/newbs_external_userspace) overlay. See the `users/holykeebs` directory in [holykeebs/qmk-userspace](https://github.com/holykeebs/qmk-userspace).
 
-Start by setting up a development environment per [QMK instructions](https://docs.qmk.fm/#/newbs). Clone the repo above and not the main QMK repo:
+Start by setting up a development environment per [QMK instructions](https://docs.qmk.fm/#/newbs). Clone our Vial fork and not the main QMK repo:
 
 ```shell
-# It's also possible to use qmk setup instead of git clone: qmk setup holykeebs/qmk_firmware
-$ git clone --recurse-submodules git@github.com:holykeebs/qmk_firmware.git -b hk-master
-$ cd qmk_firmware
+$ git clone --recurse-submodules git@github.com:holykeebs/vial-qmk.git -b hk-master
+$ cd vial-qmk
 ```
 
 The shared userspace lives in the overlay repository, so clone it as well and point QMK at it. This is a one-time setting, and it's global to the `qmk` CLI, so it applies to every fork you build:
@@ -89,24 +88,24 @@ Builds then pick up `users/holykeebs` from the overlay automatically. If it isn'
 The basic structure of the build and flash command is:
 
 ```shell
-make <keyboard>:via[:flash] -e USER_NAME=holykeebs [-e feature1=value1]...
+make <keyboard>:vial[:flash] -e USER_NAME=holykeebs [-e feature1=value1]...
 ```
 
 The value for `<keyboard>` should match the keyboard you are flashing for:
 
 | Keyboard  | Value |
 | --------- | ----------------- |
-| Corne     | crkbd/rev1        |
-| Lily58    | lily58/rev1       |
+| Corne     | holykeebs/corne   |
+| Lily58    | holykeebs/lily58  |
 | Sweep     | holykeebs/sweeq   |
 | Span      | holykeebs/spankbd |
-| Keyball39 | keyball/keyball39 |
-| Keyball44 | keyball/keyball44 |
-| Keyball61 | keyball/keyball61 |
+| Keyball39 | holykeebs/keyball39 |
+| Keyball44 | holykeebs/keyball44 |
+| Keyball61 | holykeebs/keyball61 |
 | Keyball61+ | holykeebs/keyball61plus |
 
 ::: info
-For Keyball 39/44/61, please see the [dedicated section](#keyball) as the options below don't apply. The Keyball61+ is a different, userspace-based board; see [Keyball61+](#keyball61) below.
+The Keyballs take no pointing-device flags: the trackball and the OLED are always compiled in and the fitted halves are detected at boot. See the [Keyball section](#keyball) below.
 :::
 
 The table below lists the possible flags that control what feature to turn on in the firmware.
@@ -122,7 +121,7 @@ An example command might look like this:
 
 ```shell
 make \
-    crkbd/rev1:via:flash \
+    holykeebs/corne:vial:flash \
     -e USER_NAME=holykeebs \
     -e POINTING_DEVICE=trackball \
     -e POINTING_DEVICE_POSITION=right \
@@ -133,7 +132,7 @@ make \
 
 Breaking this down:
 
-1. `crkbd/rev1:via:flash` flashes for a Corne with VIA. Omitting `:flash` would just build the firmware without flashing.
+1. `holykeebs/corne:vial:flash` flashes for a Corne. Omitting `:flash` would just build the firmware without flashing.
 1. `-e USER_NAME=holykeebs` to also pull code from `users/holykeebs`.
 1. `-e POINTING_DEVICE=trackball` configures the trackball.
 1. `-e POINTING_DEVICE_POSITION=right` configures the trackball to the right side of a split keyboard.
@@ -151,7 +150,7 @@ qmk flash \
     -e POINTING_DEVICE_POSITION=right \
     -e TRACKBALL_RGB_RAINBOW=yes \
     -e OLED=yes -j8 \
-    -kb crkbd/rev1 -km via
+    -kb holykeebs/corne -km vial
 ```
 
 :::
@@ -208,7 +207,7 @@ Example:
 
 ```shell
 make \
-    crkbd/rev1:via:flash \
+    holykeebs/corne:vial:flash \
     -e USER_NAME=holykeebs \
     -e POINTING_DEVICE=trackball_trackpoint \
     -e SIDE=right \
@@ -221,7 +220,7 @@ The left side would be flashed as follows:
 
 ```shell
 make \
-    crkbd/rev1:via:flash \
+    holykeebs/corne:vial:flash \
     -e USER_NAME=holykeebs \
     -e POINTING_DEVICE=trackball_trackpoint \
     -e TRACKBALL_RGB_RAINBOW=yes \
@@ -231,89 +230,67 @@ make \
 
 ### Keyball
 
-The Keyball firmware lives [here](https://github.com/holykeebs/qmk_firmware/tree/hk-master/keyboards/keyball). It uses a different set of custom keycodes than mentioned before, but the general usage is similar.
-
-::: details
-The "official" Keyball firmware is maintained in a dedicated repository by the designer of the keyboard and is written for Pro Micro controllers. It rewrites some of the functionality that nowadays exists in QMK, and disables a number of features to save space on the low memory Pro Micro controllers.
-
-We've modernized the firmware by supporting RP2040 controllers, and making use of as much standard QMK code as possible, such as the native PMW3360 driver, split pointing and more. The net result is an easier to maintain firmware with less bugs.
-:::
+Every Keyball (39, 44, 61 and 61+) runs on the holykeebs userspace, so the `HK_*`
+keycodes and [features](#features) on this page apply. The boards live under
+[keyboards/holykeebs](https://github.com/holykeebs/qmk_firmware/tree/hk-master/keyboards/holykeebs).
+On the Keyball 39, 44 and 61 one image covers a trackball on the left, the right
+or both halves: the firmware detects which halves carry one at boot and updates
+the "Ball availability" layout in Vial to match. The Keyball61+ detects its hand
+from the sensor instead, so its trackball must be on the right half. Per-key
+lighting is QMK's RGB Matrix.
 
 ::: danger
 Avoid connecting / disconnecting the TRRS cable when the keyboard is powered. This can short the GPIO pins of the controllers.
 :::
 
-While on the `hk-master` branch, flash both sides using:
+While on the `hk-master` branch, build with (append `:flash` to also flash):
 
 ```shell
-# Replace 44 with the Keyball you have (39, 44 or 61).
-make keyball/keyball44:via:flash -j8
+# Replace 44 with the Keyball you have (39, 44, 61 or 61plus).
+make holykeebs/keyball44:vial -e USER_NAME=holykeebs -e OLED=yes
 ```
 
-USB cable can be connected to either side of the keyboard.
+The USB cable can be connected to either side of the keyboard. See the
+[Keyball guide](/guides/keyboard/keyball/) for the keyboard-specific details,
+including the Keyball61+.
 
-### Keyball61+
+## VIA
 
-The Keyball61+ is a Keyball built on the holykeebs userspace, so the `HK_*` keycodes
-and [features](#features) on this page apply (not the Keyball custom keycodes). See the [Keyball61+ guide](/guides/keyboard/keyball/#keyball61) for the
-full details. Build it with:
+[VIA](https://usevia.app/) is the web-based alternative to Vial. The precompiled
+firmware is Vial only, but the same keyboards build for VIA from the
+[holykeebs/qmk_firmware](https://github.com/holykeebs/qmk_firmware) fork
+(`hk-master` branch) against the same `users/holykeebs` overlay, so every
+feature on this page behaves identically; only the configurator differs.
+
+Clone that fork instead of vial-qmk, then use `:hk` in place of `:vial` on a
+modular board with a pointing device and `:via` otherwise (device-less builds
+and every Keyball); the `-e` variables are the same. VIA
+needs the board's definition file (the `via.json` in the board directory) since
+the boards carry holykeebs USB identities.
 
 ```shell
-make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes
+$ git clone --recurse-submodules git@github.com:holykeebs/qmk_firmware.git -b hk-master
+$ cd qmk_firmware
+$ make holykeebs/corne:hk -e USER_NAME=holykeebs -e POINTING_DEVICE=trackball -e POINTING_DEVICE_POSITION=right -e OLED=yes
+$ make holykeebs/keyball61plus:via -e USER_NAME=holykeebs -e OLED=yes
 ```
-
-## Vial
-
-[Vial](https://get.vial.today/) is an alternative to VIA / Remap: a desktop app
-that edits your keymap live over USB, with no web configurator. Our Vial firmware
-lives in the [holykeebs/vial-qmk](https://github.com/holykeebs/vial-qmk) fork
-(`hk-master` branch).
-
-It builds against the **same** `users/holykeebs` overlay as the QMK firmware (see
-[Compiling](#compiling)), so every pointing-device feature described below behaves
-identically; only the configurator differs.
-
-::: info
-The [Keyball61+](#keyball61) is currently the keyboard supported on Vial. Our other
-keyboards use VIA / Remap ([above](#compiling)).
-:::
-
-A precompiled Vial image is available: in the [Precompiled](#precompiled)
-selector above, pick Keyball61+ and the Vial configurator. Building from
-source is only needed if you want to customize the firmware.
-
-To build it from the vial-qmk fork: the one-time overlay setup is shared, `qmk`'s
-`user.overlay_dir` is global, so if you already configured it for the QMK firmware
-it applies here unchanged (otherwise clone the overlay and set it as in
-[Compiling](#compiling)).
-
-```shell
-$ git clone --recurse-submodules git@github.com:holykeebs/vial-qmk.git -b hk-master
-$ cd vial-qmk
-$ make holykeebs/keyball61plus:vial -e USER_NAME=holykeebs -e OLED=yes
-```
-
-Append `:flash` to flash, or copy the resulting `.uf2` to the RP2040 bootloader
-drive. Then open the [Vial app](https://get.vial.today/) to edit: the trackball
-controls appear as custom keycodes, and the trackball side is detected
-automatically.
 
 ## Testing
 
 1. On a split keyboard, connect the halves when none of the sides are powered.
 1. On a split keyboard, the output of the build/flash command will say which side needs to be connected to the computer.
 1. On first use, a dialog from the OS may open to configure a new keyboard, go through that.
-1. Use VIA's test matrix tab (Remap has a similar dialog) to check all of the keys work.
+1. Use Vial's matrix tester (under the Matrix tester tab) to check all of the keys work.
 
 If one of the keys do not work, head over to [Troubleshooting](/troubleshooting/).
 
 ## Features
 
 ::: info
-The Keyball and Killer Whale firmwares have their own dedicated implementation that overlaps with the functionality described below (precompiled firmware for these is also available in the [full list](https://github.com/holykeebs/qmk_compiled/releases/tag/latest)). Please refer to their respective documentation for more details.
+The Killer Whale firmware has its own dedicated implementation that overlaps with the functionality described below (its precompiled firmware is in the [full list](https://github.com/holykeebs/qmk_compiled/releases/tag/latest)). Please refer to its documentation for more details.
 :::
 
-The default firmware facilitates pointing device usage by extending QMK with some useful and common functionality. This functionality is exposed via a collection of keycodes that can be bound to your liking. The `hk` keymap provides a batteries included mapping in a dedicated `POINTER` layer to make use of these keycodes.
+The default firmware facilitates pointing device usage by extending QMK with some useful and common functionality. This functionality is exposed via a collection of keycodes that can be bound to your liking; they appear by name in Vial's User tab. The default keymap provides a batteries included mapping in a dedicated `POINTER` layer to make use of these keycodes.
 
 ### Sensitivity
 
@@ -369,26 +346,26 @@ If you compile your own firmware and want to leave the animation out, pass `-e B
 
 The following keycodes allow control of the above features. Orders that use the build service and have a pointing device come flashed with a default firmware that already puts these keys at sane locations. See [keymaps](../keymaps/index.md) for more details.
 
-| Keycode        | Value on Remap | Description                                                                 |
-|:---------------|:---------------|:----------------------------------------------------------------------------|
-| `HK_SAVE`      | `Kb 0`         | Saves the current config, making it persist across keyboard restart         |
-| `HK_RESET`     | `Kb 1`         | Resets the configuration to its default state                               |
-| `HK_DUMP`      | `Kb 2`         | Dumps the current config to the console (needs `CONSOLE_ENABLE=yes`)        |
-| `HK_P_SET_D`   | `Kb 3`         | When held*, tapping up/down increases/decreases the default sensitivity |
-| `HK_P_SET_S`   | `Kb 4`         | When held*, tapping up/down increases/decreases the sniping sensitivity |
-| `HK_P_SET_THR` | `Kb 5`         | When held*, pressing up/down increases/decreases the scroll throttle        |
-| `HK_S_MODE`    | `Kb 6`         | When held*, enables sniping                                                 |
-| `HK_S_MODE_T`  | `Kb 7`         | Toggles sniping                                                             |
-| `HK_D_MODE`    | `Kb 8`         | When held*, enables the drag scroll                                         |
-| `HK_D_MODE_T`  | `Kb 9`         | Toggles drag scroll                                                         |
-| `HK_C_SCROLL`  | `Kb 10`        | Cycles the scroll lock between off, horizontal and vertical                 |
-| `HK_I_SCROLL`  | `Kb 11`        | Inverts the scroll direction                                                |
-| `HK_AML_T`     | `Kb 12`        | Toggles the auto-mouse layer                                                |
-| `HK_AML_UP`    | `Kb 13`        | Increases the auto-mouse layer timeout by 50ms                              |
-| `HK_AML_DN`    | `Kb 14`        | Decreases the auto-mouse layer timeout by 50ms                              |
-| `HK_BONGO_T`   | `Kb 15`        | Toggles the bongocat OLED animation (hold shift to target the peripheral OLED) |
-| `HK_ENC_SCR_U` | `Kb 16`        | Scrolls up by one encoder detent, for a scroll wheel's rotation             |
-| `HK_ENC_SCR_D` | `Kb 17`        | Scrolls down by one encoder detent, for a scroll wheel's rotation           |
+| Keycode        | Description                                                                 |
+|:---------------|:----------------------------------------------------------------------------|
+| `HK_SAVE`      | Saves the current config, making it persist across keyboard restart         |
+| `HK_RESET`     | Resets the configuration to its default state                               |
+| `HK_DUMP`      | Dumps the current config to the console (needs `CONSOLE_ENABLE=yes`)        |
+| `HK_P_SET_D`   | When held*, tapping up/down increases/decreases the default sensitivity |
+| `HK_P_SET_S`   | When held*, tapping up/down increases/decreases the sniping sensitivity |
+| `HK_P_SET_THR` | When held*, pressing up/down increases/decreases the scroll throttle        |
+| `HK_S_MODE`    | When held*, enables sniping                                                 |
+| `HK_S_MODE_T`  | Toggles sniping                                                             |
+| `HK_D_MODE`    | When held*, enables the drag scroll                                         |
+| `HK_D_MODE_T`  | Toggles drag scroll                                                         |
+| `HK_C_SCROLL`  | Cycles the scroll lock between off, horizontal and vertical                 |
+| `HK_I_SCROLL`  | Inverts the scroll direction                                                |
+| `HK_AML_T`     | Toggles the auto-mouse layer                                                |
+| `HK_AML_UP`    | Increases the auto-mouse layer timeout by 50ms                              |
+| `HK_AML_DN`    | Decreases the auto-mouse layer timeout by 50ms                              |
+| `HK_BONGO_T`   | Toggles the bongocat OLED animation (hold shift to target the peripheral OLED) |
+| `HK_ENC_SCR_U` | Scrolls up by one encoder detent, for a scroll wheel's rotation             |
+| `HK_ENC_SCR_D` | Scrolls down by one encoder detent, for a scroll wheel's rotation           |
 
 \* Holding shift while using any of the config keycodes that need to be held will affect the peripheral pointing device. On the Keyball61+, where USB can go in either half, the unshifted keycodes always target the half that has the trackball; shift targets the other half.
 
@@ -400,7 +377,7 @@ on behind the scenes, you can turn on debug mode.
 When compiling your own firmware, simply set `CONSOLE_ENABLED=yes` in `users/holykeebs/rules.mk` (in the overlay repository) or in any other `rules.mk` in your
 keyboard tree.
 
-When using the precompiled firmwares, debug mode is turned on if the file begins with `debug_`.
+The precompiled firmwares are built without it, so debug mode means compiling your own; add `-e CONSOLE=yes` to the build command.
 
 Once debug mode is turned on, run `qmk console` with the keyboard plugged in. Example output when tapping the `HK_DUMP` key:
 

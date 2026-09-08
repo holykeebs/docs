@@ -79,18 +79,14 @@ This happens on split keyboards when only the master side is connected. Unpower 
 
 ## Reset Button Doesn't Go Into Bootloader
 
-In VIA, try binding a key to Reset (QK_BOOT keycode) and pressing it:
+In Vial, try binding a key to `QK_BOOT` (under the Quantum tab) and pressing it. The same works in VIA (bind Reset):
 
 ![via-reset-button](via-reset-button.png)
 
-In Remap, try binding a key to Bootloader (QK_BOOT keycode) and pressing it:
-
-![remap-bootloader-button](remap-bootloader-button.png)
-
-## Linux: VIA/Remap can't open keyboard
+## Linux: Vial/VIA can't open keyboard
 
 - You might need to [setup udev rules](https://get.vial.today/manual/linux-udev.html).
-- Make sure your browser supports WebHID (Chrome does, Firefox doesn't).
+- For the web-based VIA, make sure your browser supports WebHID (Chrome does, Firefox doesn't).
 
 Some systems will complain with issues like `Could not open`. If this happens, check: `chrome://device-log/` (in Chrome).
 If you run into `Failed to open '/dev/hidraw6': FILE_ERROR_ACCESS_DENIED` in the logs, you have to give this device read/write

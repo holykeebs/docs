@@ -138,7 +138,7 @@ Yes, see [SPLIT_POINTING_ENABLE](https://docs.qmk.fm/#/feature_pointing_device?i
 
 ### Remapping keys
 
-With VIA, keys and layers can be changed without flashing the keyboard. Go to the VIA [web app](https://usevia.app/), or download the [desktop app](https://github.com/the-via/releases/releases). If you don't want to use VIA, please consult QMK docs on how to create your own keymap.
+With Vial, keys and layers can be changed without flashing the keyboard: download the [Vial app](https://get.vial.today/) and plug the keyboard in. If you don't want to use Vial, please consult QMK docs on how to create your own keymap.
 
 ## Hardware: Fasteners, Spacers
 

@@ -60,7 +60,7 @@ The pointer settings are controlled with the `HK_*` keycodes documented on the [
 
 ## Keyball61+
 
-The Keyball61+ is an improved version of the popular Keyball61. It comes with two horizontal encoders on each side, replacing the switch below the controller. Each encoder is clickable so in total there are still 61 keys. The encoders remove the need for drag scrolling with the trackball (if you prefer that, you can map the encoders to something else). Additionally, the Keyball61 doesn't come in kit form, only soldered or assembled. This allows us to offer it at a lower price point than normal.
+The Keyball61+ is an improved version of the popular Keyball61. It comes with a horizontal encoder on each side, replacing the switch below the controller. Each encoder is clickable so in total there are still 61 keys. The encoders remove the need for drag scrolling with the trackball (if you prefer that, you can map the encoders to something else). Additionally, the Keyball61+ doesn't come in kit form, only soldered or assembled. This allows us to offer it at a lower price point than normal.
 
 The firmware is the same holykeebs userspace firmware as the other Keyballs,
 with the encoders mapped to scrolling (`HK_ENC_SCR_U`, `HK_ENC_SCR_D`) and a
